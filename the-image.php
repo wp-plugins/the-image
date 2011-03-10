@@ -59,7 +59,7 @@ function get_the_image($image_number = 0) {
   
   /* HTML reconstruction of extracted image */
   $attributes = array();
-  $space = chr(32);
+  $space = chr(32); /* ASCII char for compatibilty */
   
   /* Attribute for <a> tag */
   $attributes['a']  = 'rel="'.$items[$image_number]['rel'].'"';
@@ -99,14 +99,14 @@ function get_the_image($image_number = 0) {
 function the_image($image_number = 0) {
 
   echo get_the_image($image_number);
-  
+
 }
 
 /**
  * @todo Consider the utility of this function...
  */
 function has_the_image($image_number = 0) {
-	
-	return (bool) get_the_image($image_number);
-	
+  
+  return (bool) get_the_image($image_number);
+
 }

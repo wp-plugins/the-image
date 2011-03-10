@@ -6,7 +6,7 @@ Requires at least: 3.1
 Tested up to: 3.1
 Stable tag: 4.3
 
-This plugin display or return ALL image inside post content; don't the first :)
+This plugin display or return all image inside post content.
 
 == Description ==
 Display or return image from post content of the current post. This tag must be within <a title="The Loop" href="http://codex.wordpress.org/The_Loop">The Loop</a>.
@@ -32,13 +32,12 @@ Display or return image from post content of the current post. This tag must be 
 == Frequently Asked Questions ==
 
 The funcions<br />
-*<code>get_the_image()</code>
-*<code>has_the_image()</code>
+<br />
+* <code>get_the_image()</code>
+* <code>has_the_image()</code>
+<br />
 <br />
 came with the plugin.
-
-== Screenshots ==
-
 
 == Other Notes ==
 
@@ -49,8 +48,3 @@ came with the plugin.
 = 0.6 =
 * Stable release
 * Work with utf-8
-
-== Upgrade Notice ==
-
-
-== Arbitrary section ==
