@@ -39,27 +39,25 @@ License: GPL2
  * @return string
  */
 function get_the_image($image_number = 0) {
-	
+    
   $doc = new DOMDocument('1.0', 'UTF-8'); /* Initialize DOM with xml version 1.0 and charset utf-8 */
   
   $doc->loadHTML(get_the_content()); /* Load HTML content */
   
   $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
   
- /**
-  * @todo ?Write an expression which consider images inside <a> tag (<a><img></a>) and alone images (<img>).
-  */
-  $items = $html->xpath('//a[descendant::img]'); /* Catch every and only images which are inside an <a> tag */
+  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]');
+  
+  var_dump($items);
   
   if (empty($items[$image_number])) {
-  	/*$image_number = 0;*/
-   	return null;
+    /*$image_number = 0;*/
+    return null;
   }
-  
   
   /* HTML reconstruction of extracted image */
   $attributes = array();
-  $space = chr(32); /* ASCII char for compatibilty */
+  $space = chr(32);
   
   /* Attribute for <a> tag */
   $attributes['a']  = 'rel="'.$items[$image_number]['rel'].'"';

@@ -35,7 +35,8 @@ Simply call <code>the_image()</code> function in your loop.
 == Other Notes ==
 
 
-
 == Changelog ==
 = 0.6 =
 * Work with utf-8
+= 0.7 =
+* Recognize image inside <a> tags and alone images with one XPath expression.
