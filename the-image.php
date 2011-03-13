@@ -48,8 +48,6 @@ function get_the_image($image_number = 0) {
   
   $items = $html->xpath('//a[child::img] | //img[not(parent::a)]');
   
-  var_dump($items);
-  
   if (empty($items[$image_number])) {
     /*$image_number = 0;*/
     return null;
