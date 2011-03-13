@@ -6,7 +6,7 @@ Requires at least: 3.1
 Tested up to: 3.1
 Stable tag: 4.3
 
-This plugin display or return every image inside post content.
+This plugin display or return every images inside post content with power of XPath.
 
 == Description ==
 The_image plugin allow you to extract every image inside post content.
