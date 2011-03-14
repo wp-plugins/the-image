@@ -48,6 +48,8 @@ function get_the_image($image_number = 0) {
   
   $items = $html->xpath('//a[child::img] | //img[not(parent::a)]');
   
+  $item = (array) $items[$image_number];
+  
   if (empty($items[$image_number])) {
     /*$image_number = 0;*/
     return null;
@@ -57,38 +59,61 @@ function get_the_image($image_number = 0) {
   $attributes = array();
   $space = chr(32);
   
-  /* Attribute for <a> tag */
-  $attributes['a']  = 'rel="'.$items[$image_number]['rel'].'"';
-  $attributes['a'] .= $space;
-  $attributes['a'] .= 'href="'.$items[$image_number]['href'].'"';
-  $attributes['a'] .= $space;
-  $attributes['a'] .= 'target="'.$items[$image_number]['target'].'"';
-  $attributes['a'] .= $space;
-  $attributes['a'] .= 'title="'.$items[$image_number]['title'].'"';
-  $attributes['a'] .= $space;
-  $attributes['a'] .= 'class="'.$items[$image_number]['class'].'"';
-  $attributes['a'] .= $space;
-  $attributes['a'] .= 'style="'.$items[$image_number]['style'].'"';
+  if (array_key_exists('img', $items[$image_number])) {
+    /* Attribute for <a> tag */
+    $attributes['a']  = 'rel="'.$items[$image_number]['rel'].'"';
+    $attributes['a'] .= $space;
+    $attributes['a'] .= 'href="'.$items[$image_number]['href'].'"';
+    $attributes['a'] .= $space;
+    $attributes['a'] .= 'target="'.$items[$image_number]['target'].'"';
+    $attributes['a'] .= $space;
+    $attributes['a'] .= 'title="'.$items[$image_number]['title'].'"';
+    $attributes['a'] .= $space;
+    $attributes['a'] .= 'class="'.$items[$image_number]['class'].'"';
+    $attributes['a'] .= $space;
+    $attributes['a'] .= 'style="'.$items[$image_number]['style'].'"';
   
-  /* Attribute for <img> tag */
-  $attributes['img']  = 'src="'.$items[$image_number]->img['src'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'width="'.$items[$image_number]->img['width'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'height="'.$items[$image_number]->img['height'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'alt="'.$items[$image_number]->img['alt'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'class="'.$items[$image_number]->img['class'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'title="'.$items[$image_number]->img['title'].'"';
-  $attributes['img'] .= $space;
-  $attributes['img'] .= 'style="'.$items[$image_number]->img['style'].'"';
   
-  $string  = '<a '.$attributes['a'].'>';
-  $string .= '<img '.$attributes['img'].' />';
-  $string .= '</a>';
-
+    /* Attribute for <img> tag */
+    $attributes['img']  = 'src="'.$items[$image_number]->img['src'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'width="'.$items[$image_number]->img['width'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'height="'.$items[$image_number]->img['height'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'alt="'.$items[$image_number]->img['alt'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'class="'.$items[$image_number]->img['class'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'title="'.$items[$image_number]->img['title'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'style="'.$items[$image_number]->img['style'].'"';
+    
+    
+    $string  = '<a '.$attributes['a'].'>';
+    $string .= '<img '.$attributes['img'].' />';
+    $string .= '</a>';
+  } else {
+  
+    /* Attribute for <img> tag */
+    $attributes['img']  = 'src="'.$items[$image_number]['src'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'width="'.$items[$image_number]['width'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'height="'.$items[$image_number]['height'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'alt="'.$items[$image_number]['alt'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'class="'.$items[$image_number]['class'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'title="'.$items[$image_number]['title'].'"';
+    $attributes['img'] .= $space;
+    $attributes['img'] .= 'style="'.$items[$image_number]['style'].'"';
+    
+    $string = '<img '.$attributes['img'].' />';
+  
+  }
+  
   return $string;
 }
 

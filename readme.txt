@@ -1,10 +1,9 @@
 === The_image ===
 Contributors: dumbi.della.pira
 Donate link: http://www.fuckedengineers.info/
-Tags: image, content
+Tags: image, content, the_image, the_content
 Requires at least: 3.1
 Tested up to: 3.1
-Stable tag: 4.3
 
 This plugin display or return every images inside post content with power of XPath.
 
@@ -39,4 +38,5 @@ Simply call <code>the_image()</code> function in your loop.
 = 0.6 =
 * Work with utf-8
 = 0.7 =
-* Recognize image inside <code>&lt;a&gt;></code> tags and "alone" images with one XPath expression.
+* Recognize image inside <code>&lt;a&gt;</code> tags and "alone" images with one XPath expression.
+* Bugfix: images "alone" not show.
