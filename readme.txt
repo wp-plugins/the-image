@@ -17,9 +17,9 @@ Simply call <code>the_image()</code> function in your loop.
 1. Place `<?php the_image(); ?>` tag in your templates inside the loop
 
 == Frequently Asked Questions ==
-= <h3>Parameters</h3> =
+= Parameters =
 <dl><dt><strong>$image_number</strong></dt> <dd><em>(integer)</em> Image to be shown. default to 0 (first image)</dd></dl>
-= <h3>Example</h3> =
+= Example =
 <pre>&lt;?php if ( have_posts() ): while ( have_posts() ): the_post() ?&gt;
 &lt;div id="main"&gt;
     &lt;ul&gt;
