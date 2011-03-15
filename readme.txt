@@ -1,7 +1,7 @@
 === The_image ===
 Contributors: dumbi.della.pira
 Donate link: http://www.fuckedengineers.info/
-Tags: image, content, the_image, the_content
+Tags: images, content, image, the_content, the_image
 Requires at least: 3.1
 Tested up to: 3.1
 
