@@ -1,4 +1,4 @@
-=== The_image ===
+=== The image ===
 Contributors: dumbi.della.pira
 Donate link: http://www.fuckedengineers.info/
 Tags: images, content, image, the_content, the_image
