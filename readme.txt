@@ -5,7 +5,7 @@ Tags: images, content, image, the_content, the_image
 Requires at least: 3.1
 Tested up to: 3.1
 
-This plugin display or return every images inside post content with power of XPath.
+This plugin display or return every images inside post content with power of XPath. This tag must be within The_Loop.
 
 == Description ==
 The_image plugin allow you to extract every image inside post content.
@@ -35,6 +35,8 @@ Simply call <code>the_image()</code> function in your loop.
 
 
 == Changelog ==
+= 0.7.3 =
+* Better code for better coders.
 = 0.7 =
 * Recognize image inside <code>&lt;a&gt;</code> tags and "alone" images with one XPath expression.
 * Bugfix: images "alone" not show.
