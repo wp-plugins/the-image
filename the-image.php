@@ -19,12 +19,15 @@
 
 /*
 Plugin Name: The_Image tag
-Plugin URI: http://www.fuckedengineers.info/the-image
-Description: This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>. This plugin extract every image from post content with power of XPath. 
-Version: 0.7
+Plugin URI: http://www.fuckedengineers.info/template_tags/the-image
+Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
+Version: 0.7.3
+Tags: images, content, image, the_content, the_image
 Author: Giacomo Gallico aka ordigno
 Author URI: http://www.fuckedengineers.info/about
 License: GPL2
+Tested up to: 3.1
+Stable tag: 0.7.3
 */
 
 
@@ -48,73 +51,18 @@ function get_the_image($image_number = 0) {
   
   $items = $html->xpath('//a[child::img] | //img[not(parent::a)]');
   
-  $item = (array) $items[$image_number];
+  $item = (array) $items[$image_number]; /* Casting to array for better parsing */
   
   if (empty($items[$image_number])) {
     /*$image_number = 0;*/
     return null;
   }
-  
-  /* HTML reconstruction of extracted image */
-  $attributes = array();
-  $space = chr(32);
-  
-  /**
-  * @todo Code refactoring
-  */
-  if (array_key_exists('img', $items[$image_number])) {
-    /* Attribute for <a> tag */
-    $attributes['a']  = 'rel="'.$items[$image_number]['rel'].'"';
-    $attributes['a'] .= $space;
-    $attributes['a'] .= 'href="'.$items[$image_number]['href'].'"';
-    $attributes['a'] .= $space;
-    $attributes['a'] .= 'target="'.$items[$image_number]['target'].'"';
-    $attributes['a'] .= $space;
-    $attributes['a'] .= 'title="'.$items[$image_number]['title'].'"';
-    $attributes['a'] .= $space;
-    $attributes['a'] .= 'class="'.$items[$image_number]['class'].'"';
-    $attributes['a'] .= $space;
-    $attributes['a'] .= 'style="'.$items[$image_number]['style'].'"';
-  
-  
-    /* Attribute for <img> tag */
-    $attributes['img']  = 'src="'.$items[$image_number]->img['src'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'width="'.$items[$image_number]->img['width'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'height="'.$items[$image_number]->img['height'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'alt="'.$items[$image_number]->img['alt'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'class="'.$items[$image_number]->img['class'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'title="'.$items[$image_number]->img['title'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'style="'.$items[$image_number]->img['style'].'"';
-    
-    
-    $string  = '<a '.$attributes['a'].'>';
-    $string .= '<img '.$attributes['img'].' />';
-    $string .= '</a>';
+
+  if (array_key_exists('img', $item)) {
+    $img = (array) $item['img'];
+    $string = tag_gen('a', $item['@attributes'], false, tag_gen('img', $img['@attributes'], true));
   } else {
-  
-    /* Attribute for <img> tag */
-    $attributes['img']  = 'src="'.$items[$image_number]['src'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'width="'.$items[$image_number]['width'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'height="'.$items[$image_number]['height'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'alt="'.$items[$image_number]['alt'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'class="'.$items[$image_number]['class'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'title="'.$items[$image_number]['title'].'"';
-    $attributes['img'] .= $space;
-    $attributes['img'] .= 'style="'.$items[$image_number]['style'].'"';
-    
-    $string = '<img '.$attributes['img'].' />';
-  
+    $string = tag_gen('img', $item['@attributes'], true);
   }
   
   return $string;
@@ -133,4 +81,44 @@ function has_the_image($image_number = 0) {
   
   return (bool) get_the_image($image_number);
 
+}
+
+/* START Utility Functions */
+/**
+ * Little HTML tag generator.
+ * 
+ * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
+ *
+ * @param string $tag Required. The tag that will be printed.
+ * @param string $attributes Required. Array of HTML attributes.
+ * @param bool   $selfClosing Optional. If the tag end with "/>".
+ * @param string $nestedTag Optional. This param admin a string like tag_gen return.
+ * @return string
+ */
+function tag_gen($tag, $attributes, $selfClosing = false, $nestedTag = false) {
+  
+  $space = chr(32);
+  $string = '<' . $tag . $space;
+  
+  foreach ($attributes as $key => $value) {
+    $string .= $key . '="' . $value . '"' . $space;
+  }
+  
+  $string = trim( $string );
+  
+  if (!$selfClosing) {
+    
+    $string .= '>';
+    
+    if ($nestedTag) {
+      $string .= $nestedTag;
+    }
+    
+    $string .= '</' . $tag . '>';
+    
+  } else {
+    $string .= '/>';
+  }
+  
+  return $string;
 }
