@@ -59,7 +59,6 @@ function get_the_image($image_number = 0) {
   $attributes = array();
   $space = chr(32);
   
-  
   /**
   * @todo Code refactoring
   */
