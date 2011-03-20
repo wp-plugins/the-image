@@ -64,7 +64,7 @@ while (has_the_image($i) === true) {
         
 <?php endwhile; endif; ?>`
 
-== Screenshot ==
+== Screenshots ==
 1. The post content
 2. The resutl usign the_image()
 
