@@ -19,6 +19,7 @@ Simply call <code>the_image()</code> function in your loop.
 == Frequently Asked Questions ==
 = Parameters =
 <dl><dt><strong>$image_number</strong></dt> <dd><em>(integer)</em> Image to be shown. default to 0 (first image)</dd></dl>
+
 = Example 1, Display Images =
 `<?php if ( have_posts() ): while ( have_posts() ): the_post() ?>
 <div id="main">
@@ -29,9 +30,10 @@ Simply call <code>the_image()</code> function in your loop.
   </ul>
 </div>
 <?php endwhile; endif; ?>`
+
 = Example 2, Little content hook =
 This hook, delete image from post content, to prevent duplicates.
-In your <code>functions.php</code> insert
+In your <code>functions.php</code> insert:
 `function del_imgs_from_content($content) {
   $i = 0;
   $images = array();
@@ -45,11 +47,9 @@ In your <code>functions.php</code> insert
   return str_replace($images, $null, $content);
 }
 add_filter('the_content', 'del_imgs_from_content');`
-
 Now you can use <code>the_image()</code>, in your own way:
-
 `<?php if (have_posts()): while (have_posts()): the_post(); ?>
-    
+
 <h2 class="title"><?php the_title(); ?></h2>
         
 <?php  
@@ -64,9 +64,9 @@ while (has_the_image($i) === true) {
         
 <?php endwhile; endif; ?>`
 
-The result:
-
-screenshot-1.jpg
+== Screenshot ==
+1. The post content
+2. The resutl usign the_image()
 
 == Changelog ==
 = 0.7.4 =
