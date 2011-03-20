@@ -20,7 +20,7 @@ Simply call <code>the_image()</code> function in your loop.
 = Parameters =
 <dl><dt><strong>$image_number</strong></dt> <dd><em>(integer)</em> Image to be shown. default to 0 (first image)</dd></dl>
 
-= Example 1, Display Images =
+= Example 1, Display images in your loop =
 `<?php if ( have_posts() ): while ( have_posts() ): the_post() ?>
 <div id="main">
   <ul>
@@ -62,10 +62,6 @@ while (has_the_image($i) === true) {
         
 <?php endwhile; endif; ?>`
 
-== Screenshots ==
-1. The post content
-2. The resutl usign the_image()
-
 == Changelog ==
 = 0.7.4 =
 * Bugfix for tag_gen() function.
@@ -77,3 +73,7 @@ while (has_the_image($i) === true) {
 * Bugfix: images "alone" not show.
 = 0.6 =
 * Work with utf-8
+
+== Screenshots ==
+1. The post content
+2. The resutl usign the_image()
