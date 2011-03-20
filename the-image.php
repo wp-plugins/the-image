@@ -21,8 +21,8 @@
 Plugin Name: The Image
 Plugin URI: http://www.fuckedengineers.info/template_tags/the_image
 Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
-Version: 0.7.3
-Tags: images, content, image, the_content, the_image
+Version: 0.7.4
+Tags: images, content, image, the_content, the_image, loop, the_loop, the_post
 Author: Giacomo Gallico aka ordigno
 Author URI: http://www.fuckedengineers.info/about
 License: GPL2
