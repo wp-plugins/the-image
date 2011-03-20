@@ -19,7 +19,7 @@
 
 /*
 Plugin Name: The Image
-Plugin URI: http://www.fuckedengineers.info/template_tags/the-image
+Plugin URI: http://www.fuckedengineers.info/template_tags/the_image
 Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
 Version: 0.7.3
 Tags: images, content, image, the_content, the_image
@@ -27,7 +27,7 @@ Author: Giacomo Gallico aka ordigno
 Author URI: http://www.fuckedengineers.info/about
 License: GPL2
 Tested up to: 3.1
-Stable tag: 0.7.3
+Stable tag: 0.7.4
 */
 
 
@@ -49,7 +49,7 @@ function get_the_image($image_number = 0) {
   
   $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
   
-  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]');
+  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]'); /* Select all images */
   
   $item = (array) $items[$image_number]; /* Casting to array for better parsing */
   
@@ -90,34 +90,32 @@ function has_the_image($image_number = 0) {
  * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
  *
  * @param string $tag Required. The tag that will be printed.
- * @param string $attributes Required. Array of HTML attributes.
+ * @param string $attributes Optional. Array of HTML attributes.
  * @param bool   $selfClosing Optional. If the tag end with "/>".
- * @param string $nestedTag Optional. This param admin a string like tag_gen return.
+ * @param string $nestedTag Optional. This param admit a string like tag_gen's return.
  * @return string
  */
-function tag_gen($tag, $attributes, $selfClosing = false, $nestedTag = false) {
+function tag_gen($tag, $attributes = array(), $selfClosing = false, $nestedTag = '') {
   
   $space = chr(32);
   $string = '<' . $tag . $space;
   
-  foreach ($attributes as $key => $value) {
-    $string .= $key . '="' . $value . '"' . $space;
+  if (!empty($attributes)) {
+    foreach ($attributes as $key => $value) {
+      $string .= $key . '="' . $value . '"' . $space;
+    }
   }
   
   $string = trim( $string );
   
-  if (!$selfClosing) {
-    
+  if (empty($selfClosing)) {
     $string .= '>';
-    
     if ($nestedTag) {
       $string .= $nestedTag;
     }
-    
     $string .= '</' . $tag . '>';
-    
   } else {
-    $string .= '/>';
+    $string .= $space . '/>';
   }
   
   return $string;
