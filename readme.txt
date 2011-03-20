@@ -42,9 +42,7 @@ In your <code>functions.php</code> insert:
     $i++;
   }
   
-  $null = chr(0); /* ASCII char for null */
-  
-  return str_replace($images, $null, $content);
+  return str_replace($images, '', $content);
 }
 add_filter('the_content', 'del_imgs_from_content');`
 Now you can use <code>the_image()</code>, in your own way:
