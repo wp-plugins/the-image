@@ -66,6 +66,7 @@ while (has_the_image($i) === true) {
 
 The result:
 
+screenshot-1.jpg
 
 == Changelog ==
 = 0.7.4 =
