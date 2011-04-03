@@ -22,7 +22,7 @@ Plugin Name: The Image
 Plugin URI: http://www.fuckedengineers.info/template_tags/the_image
 Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
 Version: 0.8.0
-Tags: images, image, content, gallery, thumb, thumbnails, the_content, the_image, loop, the_loop, the_post
+Tags: images, content, image, the_content, the_image, loop, the_loop, the_post
 Author: Giacomo Gallico aka ordigno
 Author URI: http://www.fuckedengineers.info/about
 License: GPL2
@@ -42,8 +42,13 @@ Stable tag: 0.8.0
  */
 function get_the_image($image_number = 0) {
   
-  $item = image_extractor($image_number, get_the_content());
-
+  $content = get_the_content();
+  $item = image_extractor($content, $image_number);
+  
+  if (empty($item)) {
+    return null;
+  }
+  
   if (array_key_exists('img', $item)) {
     $img = (array) $item['img'];
     $string = tag_gen('a', $item['@attributes'], false, tag_gen('img', $img['@attributes'], true));
@@ -120,10 +125,6 @@ function image_extractor($content, $image_number = 0) {
   $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
   
   $items = $html->xpath('//a[child::img] | //img[not(parent::a)]'); /* Select all images */
-  
-  if (empty($items[$image_number])) {
-    return null;
-  }
   
   return (array) $items[$image_number]; /* Casting to array for better parsing */
 }

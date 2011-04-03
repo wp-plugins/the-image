@@ -70,6 +70,8 @@ while (has_the_image($i) === true) {
 2. The result usign the_image()
 
 == Changelog ==
+= 0.8.1 =
+* Resolved horrible coding error in <code>image_extractor</code> function
 = 0.8.0 =
 * Added <code>image_extractor</code> function that return the extracted array of image. Usefull for hook into plugin.
 = 0.7.4 =
