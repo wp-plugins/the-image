@@ -20,7 +20,7 @@ Simply call <code>the_image()</code> function in your loop.
 = Parameters =
 <strong>$image_number</strong> <em>(integer)</em> Image to be shown. default to 0 (first image).
 
-= Example 1, Display images in your loop =
+= Example 1, Display images in your template's loop =
 `<?php if ( have_posts() ): while ( have_posts() ): the_post() ?>
 <div id="main">
   <ul>
@@ -47,7 +47,7 @@ function del_imgs_from_content($content) {
 add_filter('the_content', 'del_imgs_from_content');`
 This hook, delete image from post content, to prevent duplicates.
 
-Now you can use <code>the_image()</code>, in your own way:
+= Example 3, List all image in post content =
 `<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
 <h2 class="title"><?php the_title(); ?></h2>

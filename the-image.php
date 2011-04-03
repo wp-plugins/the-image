@@ -27,7 +27,7 @@ Author: Giacomo Gallico aka ordigno
 Author URI: http://www.fuckedengineers.info/about
 License: GPL2
 Tested up to: 3.1
-Stable tag: 0.8.0
+Stable tag: 0.7.4
 */
 
 /**
