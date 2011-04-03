@@ -30,7 +30,6 @@ Tested up to: 3.1
 Stable tag: 0.7.4
 */
 
-
 /**
  * Retrieve the images from post content.
  * 
@@ -42,21 +41,8 @@ Stable tag: 0.7.4
  * @return string
  */
 function get_the_image($image_number = 0) {
-    
-  $doc = new DOMDocument('1.0', 'UTF-8'); /* Initialize DOM with xml version 1.0 and charset utf-8 */
   
-  $doc->loadHTML(get_the_content()); /* Load HTML content */
-  
-  $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
-  
-  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]'); /* Select all images */
-  
-  $item = (array) $items[$image_number]; /* Casting to array for better parsing */
-  
-  if (empty($items[$image_number])) {
-    /*$image_number = 0;*/
-    return null;
-  }
+  $item = image_extractor($image_number, get_the_content());
 
   if (array_key_exists('img', $item)) {
     $img = (array) $item['img'];
@@ -74,9 +60,6 @@ function the_image($image_number = 0) {
 
 }
 
-/**
- * @todo Consider the utility of this function...
- */
 function has_the_image($image_number = 0) {
   
   return (bool) get_the_image($image_number);
@@ -119,4 +102,21 @@ function tag_gen($tag, $attributes = array(), $selfClosing = false, $nestedTag =
   }
   
   return $string;
+}
+
+function image_extractor($image_number = 0, $content = '') {
+  
+  $doc = new DOMDocument('1.0', 'UTF-8'); /* Initialize DOM with xml version 1.0 and charset utf-8 */
+  
+  $doc->loadHTML($content); /* Load HTML content */
+  
+  $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
+  
+  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]'); /* Select all images */
+  
+  if (empty($items[$image_number])) {
+    return null;
+  }
+  
+  return (array) $items[$image_number]; /* Casting to array for better parsing */
 }

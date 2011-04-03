@@ -18,7 +18,7 @@ Simply call <code>the_image()</code> function in your loop.
 
 == Frequently Asked Questions ==
 = Parameters =
-<dl><dt><strong>$image_number</strong></dt> <dd><em>(integer)</em> Image to be shown. default to 0 (first image)</dd></dl>
+<strong>$image_number</strong> <em>(integer)</em> Image to be shown. default to 0 (first image).
 
 = Example 1, Display images in your loop =
 `<?php if ( have_posts() ): while ( have_posts() ): the_post() ?>
@@ -32,9 +32,9 @@ Simply call <code>the_image()</code> function in your loop.
 <?php endwhile; endif; ?>`
 
 = Example 2, Little content hook =
-This hook, delete image from post content, to prevent duplicates.
-In your <code>functions.php</code> insert:
-`function del_imgs_from_content($content) {
+`
+// functions.php
+function del_imgs_from_content($content) {
   $i = 0;
   $images = array();
   while (has_the_image($i) === true) {
@@ -42,9 +42,11 @@ In your <code>functions.php</code> insert:
     $i++;
   }
   
-  return str_replace($images, '', $content);
+  return str_replace($images, null, $content);
 }
 add_filter('the_content', 'del_imgs_from_content');`
+This hook, delete image from post content, to prevent duplicates.
+
 Now you can use <code>the_image()</code>, in your own way:
 `<?php if (have_posts()): while (have_posts()): the_post(); ?>
 
@@ -62,7 +64,14 @@ while (has_the_image($i) === true) {
         
 <?php endwhile; endif; ?>`
 
+== Screenshots ==
+
+1. The post content
+2. The resutl usign the_image()
+
 == Changelog ==
+= 0.8.0 =
+* Function that return extracted raw data. Usefull for hook in.
 = 0.7.4 =
 * Bugfix for tag_gen() function.
 * Readme update with content hook.
@@ -73,7 +82,3 @@ while (has_the_image($i) === true) {
 * Bugfix: images "alone" not show.
 = 0.6 =
 * Work with utf-8
-
-== Screenshots ==
-1. The post content
-2. The resutl usign the_image()
