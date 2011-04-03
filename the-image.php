@@ -33,7 +33,7 @@ Stable tag: 0.7.4
 /**
  * Retrieve the images from post content.
  * 
- * @package WordPress
+ * @package Wordpress
  * @since 3.1
  * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
  *
@@ -66,9 +66,8 @@ function has_the_image($image_number = 0) {
 
 }
 
-/* START Utility Functions */
 /**
- * Little HTML tag generator.
+ * My Little HTML tag generator.
  * 
  * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
  *
@@ -104,7 +103,15 @@ function tag_gen($tag, $attributes = array(), $selfClosing = false, $nestedTag =
   return $string;
 }
 
-function image_extractor($image_number = 0, $content = '') {
+/**
+ * My Little image extractor.
+ * 
+ * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
+ * @param string $content Required. The content within images.
+ * @param integer $image_number Optional. The image position inside content. Default to 0 (first).
+ * @return array
+ */
+function image_extractor($content, $image_number = 0) {
   
   $doc = new DOMDocument('1.0', 'UTF-8'); /* Initialize DOM with xml version 1.0 and charset utf-8 */
   
