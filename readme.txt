@@ -67,11 +67,11 @@ while (has_the_image($i) === true) {
 == Screenshots ==
 
 1. The post content
-2. The resutl usign the_image()
+2. The result usign the_image()
 
 == Changelog ==
 = 0.8.0 =
-* Function that return extracted raw data. Usefull for hook in.
+* Added <code>image_extractor</code> function that return the extracted array of image. Usefull for hook into plugin.
 = 0.7.4 =
 * Bugfix for tag_gen() function.
 * Readme update with content hook.
