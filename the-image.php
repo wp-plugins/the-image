@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * Copyright (C) 2011 Giacomo Gallico (giacomorama@gmail.com)
  *
  * This program is free software; you can redistribute it and/or
@@ -18,113 +18,75 @@
  */
 
 /*
-Plugin Name: The Image
-Plugin URI: http://www.fuckedengineers.info/template_tags/the_image
-Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
-Version: 0.8.1
-Tags: images, content, image, the_content, the_image, loop, the_loop, the_post
-Author: Giacomo Gallico aka ordigno
-Author URI: http://www.fuckedengineers.info/about
-License: GPL2
-Tested up to: 3.1
-Stable tag: 0.8.1
-*/
+ Plugin Name: The Image
+ Plugin URI: http://www.fuckedengineers.info/template_tags/the_image
+ Description: This plugin extract every image from post content with power of XPath. This tag must be within <a href="http://codex.wordpress.org/The_Loop">The_Loop</a>.
+ Version: 0.9.1
+ Tags: images, content, image, the_content, the_image, loop, the_loop, the_post
+ Author: Giacomo Gallico aka ordigno
+ Author URI: http://www.fuckedengineers.info/about
+ License: GPL2
+ Tested up to: 3.1
+ Stable tag: 0.9.1
+ */
+
+/* Query for extracting images */
+define('QXPATH', '//a[child::img] | //img[not(parent::a)]');
 
 /**
  * Retrieve the images from post content.
- * 
+ *
  * @package Wordpress
  * @since 3.1
  * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
  *
- * @param integer $image_number Optional. Number of the image to be shown.
+ * @param integer $position Optional. Number of the image to be shown.
  * @return string
  */
-function get_the_image($image_number = 0) {
-  
-  $content = get_the_content();
-  $item = image_extractor($content, $image_number);
-  
+function get_the_image($position = 0) {
+
+  $item = extractor(QXPATH, $position);
+
   if (empty($item)) {
     return null;
   }
-  
-  if (array_key_exists('img', $item)) {
-    $img = (array) $item['img'];
-    $string = tag_gen('a', $item['@attributes'], false, tag_gen('img', $img['@attributes'], true));
-  } else {
-    $string = tag_gen('img', $item['@attributes'], true);
-  }
-  
-  return $string;
+
+  return str_replace('/>', ' />', $item->saveXML());
 }
 
-function the_image($image_number = 0) {
+function the_image($position = 0) {
 
-  echo get_the_image($image_number);
+  echo get_the_image($position);
 
 }
 
-function has_the_image($image_number = 0) {
-  
-  return (bool) get_the_image($image_number);
+function has_the_image($position = 0) {
+
+  return (bool) extractor(QXPATH, $position);
 
 }
 
 /**
- * My Little HTML tag generator.
- * 
- * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
+ * My Little extractor.
  *
- * @param string $tag Required. The tag that will be printed.
- * @param string $attributes Optional. Array of HTML attributes.
- * @param bool   $selfClosing Optional. If the tag end with "/>".
- * @param string $nestedTag Optional. This param admit a string like tag_gen's return.
- * @return string
- */
-function tag_gen($tag, $attributes = array(), $selfClosing = false, $nestedTag = '') {
-  
-  $space = chr(32);
-  $string = '<' . $tag . $space;
-  
-  if (!empty($attributes)) {
-    foreach ($attributes as $key => $value) {
-      $string .= $key . '="' . $value . '"' . $space;
-    }
-  }
-  
-  $string = trim( $string );
-  
-  if (empty($selfClosing)) {
-    $string .= '>';
-    if ($nestedTag) {
-      $string .= $nestedTag;
-    }
-    $string .= '</' . $tag . '>';
-  } else {
-    $string .= $space . '/>';
-  }
-  
-  return $string;
-}
-
-/**
- * My Little image extractor.
- * 
  * @author Giacomo Gallico aka ordigno (<a href="mailto:giacomorama@gmail.com">giacomorama@gmail.com</a>)
- * @param string $content Required. The content within images.
- * @param integer $image_number Optional. The image position inside content. Default to 0 (first).
+ * @param string $query Required. The XPath query.
+ * @param integer $position Optional. The object position inside content. Default to 0 (first).
  * @return array
  */
-function image_extractor($content, $image_number = 0) {
-  
-  $doc = new DOMDocument('1.0', 'UTF-8'); /* Initialize DOM with xml version 1.0 and charset utf-8 */
-  
-  $doc->loadHTML($content); /* Load HTML content */
-  
-  $html = simplexml_import_dom($doc); /* Convert DOM in SimpleXML object */
-  
-  $items = $html->xpath('//a[child::img] | //img[not(parent::a)]'); /* Select all images */
-  
-  return (array) $items[$image_number]; /* Casting to array for better parsing */
+function extractor($query, $position = 0) {
+
+  $content = get_the_content();
+
+  /* Initialize DOM with xml version 1.0 and charset utf-8 */
+  $doc = new DOMDocument('1.0', 'UTF-8');
+
+  @$doc->loadHTML($content);
+
+  /* Convert DOM in SimpleXML object */
+  $html = simplexml_import_dom($doc);
+
+  $items = $html->xpath($query);
+
+  return $items[$position];
 }

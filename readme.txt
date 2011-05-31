@@ -3,7 +3,7 @@ Contributors: dumbi.della.pira
 Donate link: http://www.fuckedengineers.info/
 Tags: images, image, content, gallery, thumb, thumbnails, the_content, the_image, loop, the_loop, the_post
 Requires at least: 3.1
-Tested up to: 3.1
+Tested up to: 3.1.1
 
 This plugin display or return every images inside post content with power of XPath. This tag must be within The_Loop.
 
@@ -70,6 +70,10 @@ while (has_the_image($i) === true) {
 2. The result usign the_image()
 
 == Changelog ==
+= 0.9.1 =
+* Bugfix when output images.
+= 0.9.0 =
+* Improved performance. Less code to execute.
 = 0.8.1 =
 * Resolved horrible coding error in <code>image_extractor</code> function
 = 0.8.0 =
